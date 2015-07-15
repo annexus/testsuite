@@ -64,7 +64,15 @@ class UnitTestInvoker
         $testCases = array ( );
 
         if ( !is_dir ( $this->rootFolder ) ) {
-            throw new \Exception("Invalid rootFolder specified: " . $this->rootFolder);
+            throw new \InvalidArgumentException("\r\n
+Invalid root test folder specified\r\n
+You said: " . $this->rootFolder . "\r\n\r\n
+The root folder is a folder which should have all you test files.\r\n
+For example, this could be a root folder: '/var/www/myproject/tests'. You should then place all your tests inside that 'root' folder. Those tests may be placed in subdirectories as well.\r\n\r\n
+Also make sure the given path is correct. If you are on Windows, try to put double quotes around the path name: \r\n
+Will NOT work: /> php.exe TestSuite.phar C:\\web development\\htdocs\\myproject\\tests \r\n
+Correct way: /> php.exe TestSuite.phar \"C:\\web development\\htdocs\\myproject\\tests\" \r\n\r\n
+Please try again\r\n\r\n");
         }
         
         $directory = new \RecursiveDirectoryIterator ( $this->rootFolder );

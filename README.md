@@ -1,7 +1,3 @@
-Please note
-===========
-This readme is NOT up to date!
-
 TestSuite
 =================
 
@@ -9,34 +5,41 @@ Unit Test &amp; Mocking Framework for PHP.
 
 Create mocks and stubs on the fly with the Mock Framework and Unit test your code with the Unit Test framework. This all comes in one pakcage, ready and easy to be used!
 
-Installation &amp; Configuration
-============
 
-1. Download the **"TestSuite"** folder and put it in any directory you like.
-2. Go into the **TestSuite** folder and open the file **CFUnitTestConfig.php**.
-3. Change the **$TestFolder** path to the folder where your unit tests will reside in.
+Quick guide
+===========
+A simple unit test and mocking framework.
 
-Note: The **$TestFolder** path will start looking from the parent of the **TestSuite** folder.
-So if your TestSuite folder is in the ROOT of your web server, it will start looking from the ROOT
-directory. If your TestSuite folder is in a sub folder called "Tests" for example. It will then start looking in
-the "Tests" folder.
+Simply install the testsuite through composer:
 
-**Example**
-  - ROOT
-    - TestSuite
-    - UnitTests
+```
+/> composer require annexus/testsuite
+```
 
-Then **$TestFolder** must be "UnitTests"
+Now create a folder in your project that will contain all your tests. In that folder create a simple test class (see description below for a simple example).
+Note, the filename MUST be the same as your class name. Example:
 
----
+File: SomeTest.php
+You should then name your class like so: `class SomeTest { }`
 
-  - ROOT
-    - SubFolder1
-      - TestSuite
-    - UnitTests
-      - UnitTest1.php
+Now you're ready to run your test. The command from console should look like this:
+```
+/> php [path to TestSuite.phar] [path to folder containing tests]
+```
+Or, if you want to load a bootstrap file like composers "autoload.php" or your custom file:
+```
+/> php --bootstrap [path to bootstrap file] [path to TestSuite.phar] [path to folder containing tests]
+```
 
-Then **$TestFolder** must be "../UnitTests"
+Example:
+```
+/> php /var/www/vendor/annexus/testsuite/TestSuite.phar /var/www/tests
+```
+
+Or with bootstrap file
+```
+/> php --bootstrap /var/www/vendor/autoload.php /var/www/vendor/annexus/testsuite/TestSuite.phar /var/www/tests
+```
 
 Creating a Unit Test
 ====================
@@ -51,7 +54,7 @@ class ExampleTestCase extends CFUnitTestCase
 {
     public function Test_A_simple_assertion()
     {
-        $this->Assert(5)->Should()->Be(5)->And()->BeGreaterThan(2);
+        $this->assert(5)->should()->be(5)->and()->beGreaterThan(2);
     }
 }
 </pre>
@@ -59,13 +62,11 @@ class ExampleTestCase extends CFUnitTestCase
 Additionally a Test Case can also have one of the following methods:
 
 <pre>
-public function SetUp() - This is run before each test method is executed
-public functin TearDown() - This is run at the end of each test method
-public function SetUpBeforeClass() - This is run before any test method is executed
-public function TearDownAfterClass() - This is run after all test methods are executed
+public function setUp() - This is run before each test method is executed
+public functin tearDown() - This is run at the end of each test method
+public function setUpBeforeClass() - This is run before any test method is executed
+public function tearDownAfterClass() - This is run after all test methods are executed
 </pre>
-
-For a more detailed example (including Mocking) check the "Example" folder.
 
 Fluent Assertions
 ==========
@@ -180,7 +181,7 @@ Run Unit Tests
 
 ## WebRunner ##
 
-When you have created your unit tests then these can easily be run from the browser. Simply browse to **"TestSuit/Unit/Runners/WebWebRunner.php"**
+When you have created your unit tests then these can easily be run from the browser. Simply browse to **"vendor/testsuite/annexus/Unit/Runners/WebWebRunner.php"**
 
 In there you can simply hit the "Run Tests" button or select the tests you want to run.
 

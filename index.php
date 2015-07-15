@@ -50,20 +50,25 @@ switch ( $argv[1] )
 			echo "\r\nInvalid bootstrap file location specified: $bootstrap \r\n";
 			break;
 		}
-		
-		if ( !is_dir ( $argv[3] ) && !is_file ( $argv[3] ) )
-		{
-			echo "\r\nThe given test location is not a valid location.\r\n";
-			break;
-		}
-		
+
 		require_once ( $bootstrap );
 		run ( $argv[3] );
 		break;
 	}
 	default:
 	{
-		run ( $argv[1] );
+		try
+		{
+			run ( $argv[1] );
+		}
+		catch(InvalidArgumentException $ex)
+		{
+			echo "\r\n".$ex->getMessage()."\r\n";
+		}
+		catch(\Exception $ex)
+		{
+			echo "\r\n".$ex->getMessage()."\r\n";
+		}
 		break;
 	}
 }
